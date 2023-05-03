@@ -1,0 +1,32 @@
+{% extends 'home.html' %}
+{% block title %}
+  Chips
+{% endblock title%}
+
+{% block content %}
+<h1 style="text-align: center; font-size: 3vw;"> Chips </h1>
+
+<div class="row">
+  {% for obj in object_list %}
+  <div class="col-sm-4">
+    <div class="card" style="width: 20rem;">
+      <img class="card-img-top" src="https://st-1.akipress.org/st_runews/6/1466346.1.1535109451.jpg" alt="Card image cap" />
+      <div class="card-body">
+        <h5 class="card-title">{{ obj.chips_name }}</h5><p>Price: {{obj.price}}tg. There are {{obj.amount}} pieces left.</p>
+        {% if obj.amount != 0 %}
+            <form action="{% url 'purchase' chips_id=obj.id %}" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                <input type="number" class="form-control" name="amount" id="amount">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit"> Buy </button>
+                </div>
+                </div>
+            </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
